@@ -7,6 +7,10 @@ namespace _02._01
 {
     class Program
     {
+        /// <summary>
+        /// Parsing and splitting. Maybe I should start looking at regexes at one point.
+        /// </summary>
+        /// <returns></returns>
         static async Task Main()
         {
             var input =

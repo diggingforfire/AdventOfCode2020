@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,6 +7,9 @@ namespace _02._02
 {
     class Program
     {
+        /// <summary>
+        /// Not much different from day one, but there was a use case for xor here. Just != would have sufficed, but isn't nearly as frightening.
+        /// </summary>
         static async Task Main()
         {
             var input =
@@ -33,5 +35,6 @@ namespace _02._02
         }
     }
 }
+
 
 
