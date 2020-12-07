@@ -1,6 +1,6 @@
 const targetBagName = "shiny gold";
 const bags = require("fs")
-	.readFileSync(require("path").join(__dirname, "input.txt"), "utf8")
+    .readFileSync(require("path").join(__dirname, "input.txt"), "utf8")
     .split("\r\n")
     .map(line => line.split("contain "))
     .map(splitLine => ({ 
