@@ -12,8 +12,6 @@ const bags = require("fs")
     }))
     .filter(innerBag => !innerBag.name.startsWith(targetBagName))
 
-
-
 function hasBag(bagName, targetBagName, allBags, cache) {
 	cache = cache || {};
 	if (cache.hasOwnProperty(bagName+targetBagName)) {
