@@ -12,15 +12,16 @@ const bags = require("fs")
     }))
     .filter(innerBag => !innerBag.name.startsWith(targetBagName))
 
-var cache = {};
 
-function hasBag(bagName, targetBagName, allBags) {
+
+function hasBag(bagName, targetBagName, allBags, cache) {
+	cache = cache || {};
 	if (cache.hasOwnProperty(bagName+targetBagName)) {
 		return cache[bagName+targetBagName];
 	}
 
 	const bag = allBags.filter(b => b.name.startsWith(bagName))[0];
-	const containsBag = bagName.startsWith(targetBagName) || (bag && bag.innerBags.some(innerBag => hasBag(innerBag.name, targetBagName, allBags)));
+	const containsBag = bagName.startsWith(targetBagName) || (bag && bag.innerBags.some(innerBag => hasBag(innerBag.name, targetBagName, allBags, cache)));
 	cache[bagName+targetBagName] = containsBag;
 	return containsBag;
 }
