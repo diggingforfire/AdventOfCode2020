@@ -6,14 +6,16 @@ const input = require("fs")
 input.unshift(0);
 input.push(Math.max.apply(null, input) + 3);
 
-const sorted = input.sort((a, b) => a - b);
-
-const graph = sorted.map((n, index, all) => {
-    return {
-        n: n,
-        nextInRange: all.slice(index + 1, index + 4).filter((x) => x - n <= 3),
-    };
-});
+const graph = input
+    .sort((a, b) => a - b)
+    .map((n, index, all) => {
+        return {
+            n: n,
+            nextInRange: all
+                .slice(index + 1, index + 4)
+                .filter((x) => x - n <= 3),
+        };
+    });
 
 function depth(node, cache) {
     cache = cache || {};
