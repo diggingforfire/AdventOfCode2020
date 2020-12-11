@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -35,7 +36,8 @@ namespace _11._02
                 var previousSeats = points.Select(p => p.Select(b => new Seat {Char = b.Char, Point = b.Point}).ToArray()).ToArray();
 
                 changed = false;
-                for (int y = 0; y < points.Length; y++)
+
+                Parallel.For(0, points.Length, (y, state) =>
                 {
                     var row = points[y];
 
@@ -52,7 +54,7 @@ namespace _11._02
 
                         changed |= seat.Char != previousSeats[y][x].Char;
                     }
-                }
+                });
             }
 
             var res = points.Sum(p => p.Count(a => a.Char == '#'));
