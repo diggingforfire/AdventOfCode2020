@@ -1,37 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace _15._02
+var startingNumbers = new [] {19, 20, 14, 0, 9, 1};
+
+var spokenNumbersWithCount =
+    new Dictionary<int, int[]>(startingNumbers.Select((number, index) =>
+        new KeyValuePair<int, int[]>(number, new[] { index + 1, 0 })));
+
+int lastSpokenNumber = startingNumbers[^1];
+for (int i = startingNumbers.Length; i < 30000000; i++)
 {
-    class Program
+    lastSpokenNumber =
+        spokenNumbersWithCount[lastSpokenNumber][1] == 0 ? 
+            0 :
+            spokenNumbersWithCount[lastSpokenNumber][0] - spokenNumbersWithCount[lastSpokenNumber][1];
+
+    if (spokenNumbersWithCount.ContainsKey(lastSpokenNumber))
     {
-        static async Task Main()
-        {
-            var startingNumbers = (await File.ReadAllTextAsync("input.txt")).Split(",").Select(int.Parse).ToArray();
-
-            var spokenNumbersWithCount =
-                new Dictionary<int, List<int>>(startingNumbers.Select((number, index) =>
-                    new KeyValuePair<int, List<int>>(number, new List<int>(new[] { index }))));
-
-            int lastSpokenNumber = startingNumbers[^1];
-            for (int i = startingNumbers.Length; i < 30000000; i++)
-            {
-                lastSpokenNumber =
-                    spokenNumbersWithCount[lastSpokenNumber].Count == 1 ? 0 :
-                        spokenNumbersWithCount[lastSpokenNumber][^1] - spokenNumbersWithCount[lastSpokenNumber][^2];
-
-                if (!spokenNumbersWithCount.ContainsKey(lastSpokenNumber))
-                {
-                    spokenNumbersWithCount.Add(lastSpokenNumber, new List<int>());
-                }
-
-                spokenNumbersWithCount[lastSpokenNumber].Add(i);
-            }
-
-            Console.WriteLine(lastSpokenNumber);
-        }
+        spokenNumbersWithCount[lastSpokenNumber][1] = spokenNumbersWithCount[lastSpokenNumber][0];
+        spokenNumbersWithCount[lastSpokenNumber][0] = i + 1;
+    }
+    else
+    {
+        spokenNumbersWithCount.Add(lastSpokenNumber, new[] { i + 1, 0 });
     }
 }
+
+Console.WriteLine(lastSpokenNumber);
