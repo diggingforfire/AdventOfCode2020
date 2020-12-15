@@ -16,7 +16,9 @@ function run(input, index, mask, mem) {
         } else {
             const address = next.match(/\[(.*?)\]/)[1];
             const value = next.split("=")[1].trimStart();
-            mem[address] = applyMask(value, mask);
+            applyMask(address, mask).forEach(maskedAddress => {
+                mem[maskedAddress] = value;
+            });
         }
         return run(input, ++index, mask, mem);
     } else {
@@ -30,7 +32,10 @@ function applyMask(value, mask) {
         .toString(2)
         .padStart(mask.length, '0')
         .split('')
-        .map((bit, index) => mask[index] === 'X' ? bit : mask[index]);
+        .map((bit, index) => 
+            mask[index] === '0' ? bit : 
+            mask[index] === '1' ? '1' :
+            'X');
         
     return parseInt(masked.join(""), 2);
 }
