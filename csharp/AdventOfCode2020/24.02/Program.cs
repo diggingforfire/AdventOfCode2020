@@ -99,7 +99,6 @@ namespace _24._02
                     {
                         flipState[change.Key] = !flipState[change.Key];
                     }
-
                 }
             }
 
