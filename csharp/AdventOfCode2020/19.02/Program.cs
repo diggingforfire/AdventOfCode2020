@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace _19._01
+namespace _19._02
 {
     class Program
     {
@@ -36,25 +36,25 @@ namespace _19._01
 
         static string[] GetValidMessages(
             string message,
-            (int Id, char Letter, int[][] SubRules) rule, 
+            (int Id, char Letter, int[][] SubRules) rule,
             IDictionary<int, (int Id, char Letter, int[][] SubRules)> rules)
         {
             if (rule.Letter != default(char))
             {
                 if (message.Length > 0 && message[0] == rule.Letter)
                 {
-                    return new[] {message.Substring(1)};
+                    return new[] { message.Substring(1) };
                 }
 
-                return new string[]{};
+                return new string[] { };
             }
 
             List<string> list = new List<string>();
 
             foreach (var subRuleGroup in rule.SubRules)
             {
-                var subMessages = subRuleGroup.Aggregate((IEnumerable<string>) new[] {message}, 
-                    (options, subRule) => 
+                var subMessages = subRuleGroup.Aggregate((IEnumerable<string>)new[] { message },
+                    (options, subRule) =>
                         options.SelectMany(option => GetValidMessages(option, rules[subRule], rules)));
 
                 list.AddRange(subMessages);
